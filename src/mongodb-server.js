@@ -38,7 +38,7 @@ db.mongoose
 //Default route for server status
 app.get("/", (req, res) => {
   res.json({
-    message: `Server is running on port ${PORT}`,
+    message: `Server is running on port ${PORT}!`,
   });
 });
 
