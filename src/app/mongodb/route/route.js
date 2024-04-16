@@ -1,19 +1,23 @@
 const router = require("express").Router();
-const tutorial = require("../controller/controller.js");
-
+const group = require("../controller/groupController.js");
+//Group Section
+//Create groups
 // Create document
-router.post("/api/tutorial", tutorial.create);
+router.post("/api/group", group.create);
 
 // Retrieve all documents
-router.get("/api/tutorial", tutorial.findAll);
+router.get("/api/group", group.findAll);
 
 // Retrieve single document by id
-router.get("/api/tutorial/:id", tutorial.findOne);
+router.get("/api/group/:id", group.findOne);
 
 // Update document by id
-router.put("/api/tutorial/:id", tutorial.update);
+router.put("/api/group/:id", group.update);
 
 // Delete document by id
-router.delete("/api/tutorial/:id", tutorial.delete);
+router.delete("/api/group/:id", group.delete);
+
+// Set all documents' done field to false
+router.put("/api/group/reset/done", group.setAllDoneToFalse);
 
 module.exports = router;
