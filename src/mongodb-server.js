@@ -7,7 +7,7 @@ const corsOptions = {
   //local
   //origin: "http://localhost:80",
   //server
-  origin: "http://115.85.180.49:80",
+  origin: "http://115.85.180.49",
 };
 
 const PORT = process.env.PORT || 8080;
