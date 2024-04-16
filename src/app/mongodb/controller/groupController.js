@@ -1,45 +1,47 @@
 const db = require("../model/index.js");
-const Tutorial = db.tutorial;
+const Group = db.group;
 
 // Create document
 exports.create = (req, res) => {
-  // Validate request
-  if (!req.body.title) {
-    res.status(400).send({
-      message: "Title is empty!",
-    });
+  // TODO: Validate request attirbutes
+  //   if (!req.body.title) {
+  //     res.status(400).send({
+  //       message: "Title is empty!",
+  //     });
 
-    return;
-  }
+  //     return;
+  //   }
 
   // Set document
-  const tutorial = new Tutorial({
-    title: req.body.title,
-    description: req.body.description,
-    published: req.body.published ? req.body.published : false,
+  const group = new Group({
+    name: req.body.name,
+    raid: req.body.raid,
+    difficulty: req.body.difficulty,
+    done: req.body.done,
+    member: req.body.member,
   });
 
   // Save document
-  Tutorial.create(tutorial)
+  Group.create(group)
     .then((data) => {
       res.send(data);
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Create document failure.",
+        message: err.message || "Create Group failure.",
       });
     });
 };
 
 // Retrieve all documents
 exports.findAll = (req, res) => {
-  const title = req.query.title;
-  const condition = title
-    ? { title: { $regex: new RegExp(title), $options: "i" } }
+  const name = req.query.name;
+  const condition = name
+    ? { name: { $regex: new RegExp(name), $options: "i" } }
     : {};
 
   // Retrieve all documents
-  Tutorial.find(condition)
+  Group.find(condition)
     .then((data) => {
       res.send(data);
     })
@@ -55,7 +57,7 @@ exports.findOne = (req, res) => {
   const id = req.params.id;
 
   // Retrieve single document by id
-  Tutorial.findById(id)
+  Group.findById(id)
     .then((data) => {
       if (!data) {
         res.status(404).send({
@@ -85,7 +87,7 @@ exports.update = (req, res) => {
   const id = req.params.id;
 
   // Update document by id
-  Tutorial.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+  Group.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
     .then((data) => {
       if (!data) {
         res.status(404).send({
@@ -116,7 +118,7 @@ exports.delete = (req, res) => {
   const id = req.params.id;
 
   // Delete document by id
-  Tutorial.findByIdAndRemove(id)
+  Group.findByIdAndDelete(id)
     .then((data) => {
       if (!data) {
         res.status(404).send({
@@ -131,6 +133,21 @@ exports.delete = (req, res) => {
     .catch((err) => {
       res.status(500).send({
         message: err.message || "Delete document failure. (id: " + id + ")",
+      });
+    });
+};
+
+// Set all documents' done field to false
+exports.setAllDoneToFalse = (req, res) => {
+  // Update all documents
+  Group.updateMany({}, { $set: { done: false } })
+    .then(() => {
+      res.send({ message: "All documents' done field set to false." });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || "Failed to set all documents' done field to false.",
       });
     });
 };

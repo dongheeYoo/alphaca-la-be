@@ -4,7 +4,7 @@ const cors = require("cors");
 const app = express();
 
 const corsOptions = {
-  origin: "http://localhost:8080",
+  origin: "http://localhost:5173",
 };
 
 const PORT = process.env.PORT || 8080;
@@ -27,7 +27,6 @@ db.mongoose
   .then(() => {
     console.log("db.url :", db.url);
     console.log("db.mongoose :", db.mongoose);
-    console.log("db.tutorial.db :", db.tutorial.db);
     console.log("Database Connection Success");
   })
   .catch((err) => {
