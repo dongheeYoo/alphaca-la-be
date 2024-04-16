@@ -4,7 +4,10 @@ const cors = require("cors");
 const app = express();
 
 const corsOptions = {
-  origin: "http://localhost:80",
+  //local
+  //origin: "http://localhost:80",
+  //server
+  origin: "http://115.85.180.49:80",
 };
 
 const PORT = process.env.PORT || 8080;
