@@ -20,4 +20,9 @@ router.delete("/api/group/:id", group.delete);
 // Set all documents' done field to false
 router.put("/api/group/reset/done", group.setAllDoneToFalse);
 
+router.get(
+  "/api/group/member/info/:memberCharacterName",
+  group.findGroupsInfoByMemberCharacterName
+);
+
 module.exports = router;

@@ -151,3 +151,34 @@ exports.setAllDoneToFalse = (req, res) => {
       });
     });
 };
+
+// Retrieve group name and done status by member name
+exports.findGroupsInfoByMemberCharacterName = (req, res) => {
+  const memberCharacterName = req.params.memberCharacterName;
+
+  // Find groups by member name
+  Group.find({ "member.CharacterName": memberCharacterName })
+    .then((data) => {
+      if (!data || data.length === 0) {
+        res.status(404).send({
+          message: "Cannot find any groups for member: " + memberCharacterName,
+        });
+      } else {
+        const groupsInfo = data.map((group) => ({
+          groupName: group.name,
+          raid: group.raid,
+          difficulty: group.difficulty,
+          done: group.done,
+        }));
+        res.send(groupsInfo);
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message ||
+          "Failed to retrieve groups information for member: " +
+            memberCharacterName,
+      });
+    });
+};
