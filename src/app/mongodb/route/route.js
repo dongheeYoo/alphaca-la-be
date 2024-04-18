@@ -11,6 +11,9 @@ router.get("/api/group", group.findAll);
 // Retrieve single document by id
 router.get("/api/group/:id", group.findOne);
 
+// Retrieve single document by group name
+router.get("/api/group/detail/:groupName", group.findGroupDetailsByGroupName);
+
 // Update document by id
 router.put("/api/group/:id", group.update);
 

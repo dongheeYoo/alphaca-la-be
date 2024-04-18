@@ -75,6 +75,29 @@ exports.findOne = (req, res) => {
     });
 };
 
+// 공대 이름별 group details
+exports.findGroupDetailsByGroupName = (req, res) => {
+  const groupName = req.params.groupName;
+
+  Group.find({ name: groupName })
+    .then((data) => {
+      if (!data || data.length === 0) {
+        res.status(404).send({
+          message: "Cannot find any groups for member: " + groupName,
+        });
+      } else {
+        res.send(data);
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message ||
+          "Failed to retrieve groups information for member: " + groupName,
+      });
+    });
+};
+
 // Update document by id
 exports.update = (req, res) => {
   if (!req.body) {
